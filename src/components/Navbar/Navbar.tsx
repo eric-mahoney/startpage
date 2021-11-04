@@ -1,10 +1,15 @@
-import { Typography } from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const Navbar = () => {
+  const theme = useTheme();
   return (
-    <div>
-      <Typography variant="h6">startpage</Typography>
-    </div>
+    <Grid container justifyContent="space-between">
+      <Typography variant="h6" color={theme.palette.primary.dark} paddingY="20px" fontWeight={600}>
+        start
+      </Typography>
+      <SettingsIcon color="primary" />
+    </Grid>
   );
 };
 
