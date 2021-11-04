@@ -1,10 +1,12 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import { useSetRecoilState } from "recoil";
 
 import { addNewFavoriteModalState } from "../../store/Favorites";
 
 const newItemButtonStyles = {
-  m: 1,
+  mr: 1,
+  mt: 1,
+  cursor: "pointer",
 };
 
 const AddNewItemButton = () => {
@@ -12,9 +14,11 @@ const AddNewItemButton = () => {
   const handleOpeningModal = () => setModalState(true);
 
   return (
-    <Avatar onClick={() => handleOpeningModal()} sx={newItemButtonStyles}>
-      +
-    </Avatar>
+    <Tooltip title="Add a new favorite item">
+      <Avatar onClick={() => handleOpeningModal()} sx={newItemButtonStyles}>
+        +
+      </Avatar>
+    </Tooltip>
   );
 };
 
