@@ -10,10 +10,14 @@ const SavedItems = () => {
   const savedFavorites = useRecoilValue(favoriteState);
   return (
     <>
-      <Typography>Saved Items:</Typography>
-      <Grid container>
+      <Grid container flexWrap="wrap">
         {savedFavorites.map((favorite, index) => (
-          <SavedItem key={`${favorite.name}-${index}`} icon={favorite.icon} name={favorite.name} link={favorite.link} />
+          <SavedItem
+            key={`${favorite.name}-${index}`}
+            icon={favorite.icon}
+            name={favorite.name}
+            link={favorite.link}
+          />
         ))}
         <AddNewItemButton />
       </Grid>
