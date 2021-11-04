@@ -18,12 +18,13 @@ export const readableTimeState = selector({
   get: ({ get }) => {
     const date = get(currentDateState);
 
-    const hour = date.getHours();
-    const twelveHourFormat = hour > 12 ? hour - 12 : hour;
-    const meridiem = twelveHourFormat > 0 && hour < 12 ? "am" : "pm";
+    let hour = date.getHours();
+    let minutes: number | string = date.getMinutes();
+    const meridiem = hour >= 0 && hour < 12 ? "am" : "pm";
 
-    const minutes = date.getMinutes();
+    hour = hour > 12 ? hour - 12 : hour;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    return `${twelveHourFormat}:${minutes}${meridiem}`;
+    return `${hour}:${minutes}${meridiem}`;
   },
 });
