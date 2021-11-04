@@ -1,4 +1,10 @@
-import { Button, FormControl, Modal, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -13,30 +19,32 @@ const modalStyles = {
   transform: "translate(-50%, -50%)",
   width: 400,
   backgroundColor: "white",
-  border: "2px solid #000",
-  boxShadow: 24,
+  borderRadius: 2,
   p: 4,
+  outline: 0,
 };
 
 const formControlStyles = {
   my: 2,
 };
 
+const verifyUrl = (url: string) => {
+  return url.includes("https://") || url.includes("http://");
+};
+
 const AddNewItemModal = () => {
   const [modalError, setModalError] = useState(false);
-
   const [modalState, setModalState] = useRecoilState(addNewFavoriteModalState);
   const [favorites, setFavorites] = useRecoilState(favoriteState);
-
   const linkRef = useRef<HTMLInputElement>();
-  const nameRef = useRef<HTMLInputElement>();
 
   const handleClosingModal = () => setModalState(false);
+
   const handleAddFavorite = () => {
     const link = linkRef.current?.value;
-    const name = nameRef.current?.value;
 
-    if (link && name) {
+    if (link && verifyUrl(link)) {
+      const name = new URL(link).hostname.replace("www.", "");
       setFavorites([...favorites, { icon: "", link: link, name: name }]);
       setModalError(false);
       setModalState(false);
@@ -54,12 +62,19 @@ const AddNewItemModal = () => {
     >
       <Box sx={modalStyles}>
         <FormControl sx={formControlStyles}>
-          <TextField id="name-input" label="name" inputRef={nameRef} variant="outlined" />
+          <TextField
+            id="link-input"
+            label="link"
+            inputRef={linkRef}
+            variant="outlined"
+            type="url"
+          />
         </FormControl>
-        <FormControl sx={formControlStyles}>
-          <TextField id="link-input" label="link" inputRef={linkRef} variant="outlined" />
-        </FormControl>
-        <Button color="primary" variant="contained" onClick={() => handleAddFavorite()}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => handleAddFavorite()}
+        >
           Add to Favorites
         </Button>
         {modalError && (
